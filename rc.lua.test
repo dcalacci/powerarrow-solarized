@@ -63,6 +63,7 @@ musicplr       = "urxvt -T 'music' -hold -geometry 90x20-30+20 -e ncmpcpp"
 wicdcurses     = "urxvt -T 'wireless' -geometry 90x20-20+20 -e wicd-curses"
 diskusage      = "urxvt -T 'disk usage' -hold -geometry 65x11-30+20 -e df"
 htop           = "urxvt -T 'processes' -hold -geometry 90x30-10+20 -e htop"
+calendar       = "urxvt -T 'calendar' -hold -geometry 20x10-5+20 -e cal"
 --mailmutt      = "lilyterm -T 'Mutt' -g 140x44-20+34 -e mutt"
 editor         = os.getenv("EDITOR") or "vim"
 editor_cmd     = terminal .. " -e " .. editor
@@ -186,7 +187,7 @@ function () awful.util.spawn_with_shell(volume) end)))
 clockwidget = wibox.widget.textbox()
 vicious.register(clockwidget, vicious.widgets.date, '<span background="'..magenta..'" font="Mensch 12" color="'..base01..'">'..larrow..'</span><span background="'..base01..'" font="Mensch 10" color="'..base2..'"> %b %d <span font="Mensh 12">'..lthinsep..'</span> %R </span>', 60)
 clockwidget:buttons(awful.util.table.join(awful.button({ }, 1,
-function () awful.util.spawn_with_shell(alsamixer) end)))
+function () awful.util.spawn_with_shell(calendar) end)))
 
 --{{---| CPU / sensors widget |---------------------------------------------------------------------
 
