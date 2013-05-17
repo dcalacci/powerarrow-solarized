@@ -17,7 +17,7 @@ It is a fork of [romockee's powerarrow theme](https://github.com/romockee/powera
 Without the above installed, the basic widget functionality will not work.
 
 ## Installation
-  curl -L https://raw.github.com/dcalacci/powerarrow-solarized/master/install.sh | sh
+    curl -L https://raw.github.com/dcalacci/powerarrow-solarized/master/install.sh | sh
   
 There are menu items and other configurations that are specific to my installation in `rc.lua` that you will need to go through and edit/purge.
 
