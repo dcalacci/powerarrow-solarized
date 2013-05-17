@@ -4,7 +4,7 @@ This is a theme for the [Awesome Window Manager](http://awesome.naquadah.org/).
 
 It is a fork of [romockee's powerarrow theme](https://github.com/romockee/powerarrow).
 
-![basic](screnshots/basic.png)
+![basic](screenshots/basic.png)
 
 ## Dependencies
 - [Awesome 3.5](http://awesome.naquadah.org/download/)
