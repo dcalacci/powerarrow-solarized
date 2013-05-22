@@ -15,16 +15,13 @@ beautiful = require("beautiful")
 naughty = require("naughty")
 menubar = require("menubar")
 
-require('couth.couth')
-require('couth.alsa')
-
---{{---| Font |-------------------------------------------------------------------------------------
+--{{---| Font |-----------------------------------------------------------------
 awesome.font = "Mensch 10"
 
---{{---| Java GUI's fix |---------------------------------------------------------------------------
+--{{---| Java GUI's fix |-------------------------------------------------------
 
 --awful.util.spawn_with_shell("wmname LG3D")
---{{---| Error handling |---------------------------------------------------------------------------
+--{{---| Error handling |-------------------------------------------------------
 
 if awesome.startup_errors then
     naughty.notify({ preset = naughty.config.presets.critical,
@@ -56,22 +53,17 @@ end
 --{{---| Variables |--------------------------------------------------------------------------------
 
 modkey         = "Mod4"
-terminal       = "sakura -c 222 -r 60 --geometry=+15+30"
-lilyterm       = "lilyterm -g 221x60+20+36"
+terminal       = "urxvt"
 volume         = "urxvt -T 'vol' -hold -geometry 95x20-30+20 -e alsamixer"
 musicplr       = "urxvt -T 'music' -hold -geometry 90x20-30+20 -e ncmpcpp"
 wicdcurses     = "urxvt -T 'wireless' -geometry 90x20-20+20 -e wicd-curses"
 diskusage      = "urxvt -T 'disk usage' -hold -geometry 65x11-30+20 -e df"
 htop           = "urxvt -T 'processes' -hold -geometry 90x30-10+20 -e htop"
 calendar       = "urxvt -T 'calendar' -hold -geometry 21x9-5+20 -e cal"
---mailmutt      = "lilyterm -T 'Mutt' -g 140x44-20+34 -e mutt"
 editor         = os.getenv("EDITOR") or "vim"
 editor_cmd     = terminal .. " -e " .. editor
 browser        = "chromium"
 
---{{---| Couth Alsa volume applet |-----------------------------------------------------------------
-
---couth.CONFIG.ALSA_CONTROLS = { 'Master', 'PCM' }
 
 --{{---| Table of layouts |-------------------------------------------------------------------------
 
@@ -133,17 +125,6 @@ cpu 		= "⊡"
 mem 		= "⌂"
 wifi            = "✲"
 
---⊚⊘⌂⌕2
---⊚⊘⌂⌕⊛⊡
---------------------------------------
-
---{{---| Chat widget |------------------------------------------------------------------------------
-
---chaticon = widget ({type = "imagebox" })
---chaticon.image = image(beautiful.widget_chat)
---chaticon:buttons(awful.util.table.join(awful.button({ }, 1,
---function () awful.util.spawn_with_shell(chat) end)))
-
 --{{---| Mail widget |------------------------------------------------------------------------------
 
 --mailicon = widget ({type = "imagebox" })
@@ -198,15 +179,6 @@ vicious.register(cpuwidget, vicious.widgets.cpu,
 
 cpuicon = wibox.widget.imagebox()
 cpuicon:set_image(beautiful.widget_cpu)
-
---vicious.register(sensors, vicious.widgets.sensors)
---tempicon = wibox.widget.imagebox()
---tempicon:set_image(beautiful.widget_temp)
---blingbling.popups.htop(cpuwidget,
---{ title_color = beautiful.notify_font_color_1,
---user_color = beautiful.notify_font_color_2,
---root_color = beautiful.notify_font_color_3,
---terminal   = "terminal --geometry=130x56-10+26"})
 
 --{{---| FS's widget / udisks-glue menu |-----------------------------------------------------------
 
@@ -307,7 +279,7 @@ mymainmenu = awful.menu({ items = {
   {" sound",                "qasmixer", beautiful.wmsmixer_icon},
   {" file manager",         "spacefm", beautiful.spacefm_icon},
   {" root terminal",        "sudo urxvt", beautiful.terminalroot_icon},
-  {" terminal",             "urxvt", beautiful.terminal_icon}
+  {" terminal",             terminal, beautiful.terminal_icon}
 }
 })
 
@@ -445,22 +417,14 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey,           }, "Tab", function () awful.client.focus.history.previous()
         if client.focus then client.focus:raise() end end),
 
---{{---| Hotkeys |----------------------------------------------------------------------------------
+--{{---| Hotkeys |--------------------------------------------------------------
 
---{{---| Terminals, shells und multiplexors |---------------------------------------------------------\-\\
+--{{---| Terminals, shells und multiplexors |-----------------------------------
                                                                                                         --
 --awful.key({ modkey },            "a",        function () awful.util.spawn_with_shell(configuration) end), --
 --awful.key({        },            "Menu",     function () awful.util.spawn(ttmux) end),                    --
 awful.key({ modkey,           }, "Return",   function () awful.util.spawn(terminal) end),                 --
---awful.key({ modkey, "Control" }, "Return",   function () awful.util.spawn(terminalr) end),                --
---awful.key({ modkey, "Shift"   }, "Return",   function () awful.util.spawn(sakura) end),                   --
---awful.key({ modkey, "Control" }, "t",        function () awful.util.spawn(rttmux) end),                   --
---awful.key({ modkey },            "t",        function () awful.util.spawn(tetmux) end),                   --
---awful.key({ modkey,           }, "z",        function () awful.util.spawn(terminal .. " -x zsh") end),    --
---awful.key({ modkey, "Shift"   }, "z",        function () awful.util.spawn(terminalr .. " -x zsh") end),   --
---                                                                                                        --
-----{{--------------------------------------------------------------------------------------------------/-//
---
+----{{--------------------------------------------------------------------------
 awful.key({ modkey, "Control" }, "r",        awesome.restart),
 awful.key({ modkey, "Shift",     "Control"}, "r", awesome.quit),
 awful.key({ modkey, "Control" }, "n",        awful.client.restore),
@@ -565,25 +529,5 @@ client.connect_signal("manage", function (c, startup)
             awful.placement.no_overlap(c) awful.placement.no_offscreen(c) end end end)
 client.connect_signal("focus", function(c) c.border_color = beautiful.border_focus end)
 client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
-
---{{---| run_once |---------------------------------------------------------------------------------
---
---function run_once(prg)
---  awful.util.spawn_with_shell("pgrep -u $USER -x " .. prg .. " || (" .. prg .. ")") end
---
-----{{---| run_once with args |-----------------------------------------------------------------------
---
---function run_oncewa(prg) if not prg then do return nil end end
---    awful.util.spawn_with_shell('ps ux | grep -v grep | grep -F ' .. prg .. ' || ' .. prg .. ' &') end
---
-----{{--| Autostart |---------------------------------------------------------------------------------
-
---os.execute("pkill compton")
---os.execute("setxkbmap -layout 'us,ru' -variant 'winkeys' -option 'grp:caps_toggle,grp_led:caps,compose:ralt' &")
---run_once("udisks-glue")
----- os.execute("sudo /etc/init.d/dcron start &")
---run_once("kbdd")
---run_once("qlipper")
---run_once("compton")
 
 --{{Xx----------------------------------------------------------------------------------------------
